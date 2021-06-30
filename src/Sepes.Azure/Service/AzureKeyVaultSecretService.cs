@@ -6,6 +6,7 @@ using Sepes.Common.Constants;
 using Sepes.Azure.Service.Interface;
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Sepes.Azure.Service
 {
@@ -18,7 +19,7 @@ namespace Sepes.Azure.Service
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        }       
+        }
 
         public async Task<Uri> AddKeyVaultSecret(string nameOfKeyVaultUrlSetting, string secretName, string secretValue)
         {
@@ -98,11 +99,23 @@ namespace Sepes.Azure.Service
         SecretClient GetKeyVaultClient(string nameOfKeyVaultUrlSetting)
         {
             var keyVaultUrl = _configuration[nameOfKeyVaultUrlSetting];
-            var tenantId = _configuration[ConfigConstants.AZ_TENANT_ID];
+
             var clientId = _configuration[ConfigConstants.AZ_CLIENT_ID];
             var clientSecret = _configuration[ConfigConstants.AZ_CLIENT_SECRET];
 
-            return new SecretClient(new Uri(keyVaultUrl), new ClientSecretCredential(tenantId, clientId, clientSecret));
+            TokenCredential credential;
+
+            if (String.IsNullOrWhiteSpace(clientId) || String.IsNullOrWhiteSpace(clientSecret))
+            {
+                credential = new DefaultAzureCredential();
+            }
+            else
+            {
+                var tenantId = _configuration[ConfigConstants.AZ_TENANT_ID];
+                credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
+            }
+            
+            return new SecretClient(new Uri(keyVaultUrl), credential);
         }
     }
 }

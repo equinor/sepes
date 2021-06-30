@@ -23,10 +23,9 @@ namespace Sepes.Functions
         }
 
         [FunctionName("ResourceOperationsQueue")]
-        [StorageAccount(ConfigConstants.RESOURCE_PROVISIONING_QUEUE_CONSTRING)]      
+        [StorageAccount(ConfigConstants.RESOURCE_PROVISIONING_QUEUE_CONSTRING)]        
         public async Task Run([QueueTrigger(queueName: "sandbox-resource-operations-queue")] QueueMessage queueMessage)
-        {
-            //var queueMessage = JsonSerializer.Deserialize<QueueMessage>(messageText);
+        {           
             _logger.LogInformation($"Processing message: {queueMessage.MessageId}, pop count: {queueMessage.DequeueCount}, exp: {queueMessage.ExpiresOn}, next visible: { queueMessage.NextVisibleOn}");
 
             var transformedQueueItem = JsonSerializer.Deserialize<ProvisioningQueueParentDto>(queueMessage.Body, JsonSerializerUtil.GetDefaultOptions());

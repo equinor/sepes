@@ -34,9 +34,27 @@ namespace Sepes.Azure.Service
             var clientId = config[ConfigConstants.AZ_CLIENT_ID];
             var clientSecret = config[ConfigConstants.AZ_CLIENT_SECRET];
 
-            _subscriptionId = config[ConfigConstants.SUBSCRIPTION_ID];        
+            _subscriptionId = config[ConfigConstants.SUBSCRIPTION_ID]; 
+            
+            if(String.IsNullOrWhiteSpace(clientSecret))
+            {
+                if (String.IsNullOrWhiteSpace(clientId))
+                {
+                    _credentials = new AzureCredentialsFactory().FromSystemAssignedManagedServiceIdentity(MSIResourceType.AppService, AzureEnvironment.AzureGlobalCloud, tenantId);
+                }
+                else
+                {
+                    _credentials = new AzureCredentialsFactory().FromUserAssigedManagedServiceIdentity(clientId, MSIResourceType.AppService, AzureEnvironment.AzureGlobalCloud, tenantId);
+              
+                }
+           
+            }
+            else
+            {
+                _credentials = new AzureCredentialsFactory().FromServicePrincipal(clientId, clientSecret, tenantId, AzureEnvironment.AzureGlobalCloud).WithDefaultSubscription(_subscriptionId);
+            }
 
-            _credentials = new AzureCredentialsFactory().FromServicePrincipal(clientId, clientSecret, tenantId, AzureEnvironment.AzureGlobalCloud).WithDefaultSubscription(_subscriptionId);
+            
 
             _azure = Microsoft.Azure.Management.Fluent.Azure.Configure()
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic)
