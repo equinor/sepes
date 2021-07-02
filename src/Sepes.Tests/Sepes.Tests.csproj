@@ -76,4 +76,10 @@
 		</None>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Mocks\Handler" />
+	  <Folder Include="Mocks\Service" />
+	  <Folder Include="Tests\Common" />
+	</ItemGroup>
+
 </Project>

@@ -1,7 +1,7 @@
-﻿using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+﻿using System;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Extensions.Configuration;
 using Sepes.Common.Constants;
-using System;
 using Sepes.Common.Util;
 
 namespace Sepes.Azure.Util
@@ -13,7 +13,7 @@ namespace Sepes.Azure.Util
         {
             if (resource == null)
             {
-                throw new System.Exception($"{errorMessagePrefix}: Resource {resourceType} with name {name} was not found");
+                throw new Exception($"{errorMessagePrefix}: Resource {resourceType} with name {name} was not found");
             }
         }
 

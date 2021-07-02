@@ -11,15 +11,21 @@ using System.Threading.Tasks;
 
 namespace Sepes.Infrastructure.Service
 {
-    public class DatasetServiceBase : ServiceBase<Dataset>
+    public class DatasetServiceBase
     {
         protected readonly ILogger _logger;
+        protected readonly SepesDbContext _db;
+        protected readonly IMapper _mapper;
+
+        protected readonly IUserService _userService;
         protected readonly IStudyPermissionService _studyPermissionService;
 
-        public DatasetServiceBase(SepesDbContext db, IMapper mapper, ILogger logger, IUserService userService, IStudyPermissionService studyPermissionService)
-            : base(db, mapper, userService)
+        public DatasetServiceBase(SepesDbContext db, IMapper mapper, ILogger logger, IUserService userService, IStudyPermissionService studyPermissionService)        
         {
             _logger = logger;
+            _db = db;
+            _mapper = mapper;
+            _userService = userService;
             _studyPermissionService = studyPermissionService;
         }      
 

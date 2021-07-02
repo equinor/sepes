@@ -1,15 +1,14 @@
-﻿using Microsoft.Azure.Management.ResourceManager.Fluent;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Sepes.Azure.Service.Interface;
 using Sepes.Azure.Util;
-using Sepes.Azure.Util.Provisioning;
 using Sepes.Common.Dto.Provisioning;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Sepes.Azure.Service
 {
@@ -156,7 +155,7 @@ namespace Sepes.Azure.Service
 
         public Task<ResourceProvisioningResult> Update(ResourceProvisioningParameters parameters, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }     
     }
 }

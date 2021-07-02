@@ -6,12 +6,12 @@ using Sepes.Azure.Util;
 using Sepes.Infrastructure.Model;
 using Sepes.Infrastructure.Model.Context;
 using Sepes.Infrastructure.Service.Interface;
-using Sepes.Infrastructure.Util.Azure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Sepes.Infrastructure.Util;
 
 
 namespace Sepes.Infrastructure.Service

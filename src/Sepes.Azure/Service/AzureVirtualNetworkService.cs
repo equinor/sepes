@@ -1,19 +1,18 @@
-﻿using Microsoft.Azure.Management.Network.Fluent;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Sepes.Azure.Service.Interface;
+using Sepes.Azure.Util;
 using Sepes.Common.Constants;
 using Sepes.Common.Dto.Provisioning;
-using Sepes.Azure.Service.Interface;
-using Sepes.Common.Util;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Sepes.Azure.Util;
-using Sepes.Azure.Util.Provisioning;
 using Sepes.Common.Exceptions;
+using Sepes.Common.Util;
 
 namespace Sepes.Azure.Service
 {

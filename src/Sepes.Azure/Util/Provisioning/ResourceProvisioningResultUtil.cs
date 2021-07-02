@@ -2,7 +2,7 @@
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Sepes.Common.Dto.Provisioning;
 
-namespace Sepes.Azure.Util.Provisioning
+namespace Sepes.Azure.Util
 {
     public static class ResourceProvisioningResultUtil
     {

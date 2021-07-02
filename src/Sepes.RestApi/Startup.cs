@@ -194,7 +194,8 @@ namespace Sepes.RestApi
             services.AddSingleton<IPublicIpFromThirdPartyService, PublicIpFromThirdPartyService>();
             services.AddSingleton<IPublicIpService, PublicIpService>();
             services.AddTransient<IHealthService, HealthService>();
-
+            services.AddTransient<IDapperQueryService, DapperQueryService>(); 
+            
             //Authentication and Authorization
             services.AddScoped<IUserService, UserService>();
             services.AddTransient<IContextUserService, ContextUserService>();            
@@ -202,8 +203,10 @@ namespace Sepes.RestApi
             services.AddTransient<IStudyPermissionService, StudyPermissionService>();
             services.AddTransient<IOperationPermissionService, OperationPermissionService>();
             services.AddTransient<IUserPermissionService, UserPermissionService>();
-          
+
             //Data model services v2
+
+            services.AddTransient<IStudyEfModelOperationsService, StudyEfModelOperationsService>();
             services.AddTransient<IStudyEfModelService, StudyEfModelService>();
             services.AddTransient<IStudyListModelService, StudyListModelService>();
             services.AddTransient<IStudyDetailsModelService, StudyDetailsModelService>();
@@ -213,13 +216,19 @@ namespace Sepes.RestApi
             services.AddTransient<IStudySpecificDatasetModelService, StudySpecificDatasetModelService>();
             services.AddTransient<ISandboxDatasetModelService, SandboxDatasetModelService>();
             services.AddTransient<IResourceOperationModelService, ResourceOperationModelService>();
-            services.AddTransient<IWbsCodeCacheModelService, WbsCodeCacheModelService>();            
+            services.AddTransient<IWbsCodeCacheModelService, WbsCodeCacheModelService>();
+
+            //Use case handlers
+            services.AddTransient<IStudyUpdateHandler, StudyUpdateHandler>();
+            services.AddTransient<IStudyCreateLogoHandler, StudyCreateLogoHandler>();
+            services.AddTransient<IStudyWbsUpdateHandler, StudyWbsUpdateHandler>();
+            services.AddTransient<IStudyResultsAndLearningsUpdateHandler, StudyResultsAndLearningsUpdateHandler>();
 
             //Domain Model Services
             services.AddTransient<IStudyListService, StudyListService>();
             services.AddTransient<IStudyDetailsService, StudyDetailsService>();        
             services.AddTransient<IStudyCreateService, StudyCreateService>();
-            services.AddTransient<IStudyUpdateService, StudyUpdateService>();
+       
             services.AddTransient<IStudyDeleteService, StudyDeleteService>();
             services.AddTransient<IDatasetService, DatasetService>();
             services.AddTransient<IDatasetFirewallService, DatasetFirewallService>();
@@ -243,10 +252,7 @@ namespace Sepes.RestApi
 
             services.AddTransient<IRegionService, RegionService>();
             services.AddScoped<IVariableService, VariableService>();
-            services.AddTransient<IStudyParticipantRolesService, StudyParticipantRolesService>();
-
-            //Use cases and handlers
-            services.AddTransient<IUpdateStudyWbsHandler, UpdateStudyWbsHandler>();
+            services.AddTransient<IStudyParticipantRolesService, StudyParticipantRolesService>();        
             
 
             //Provisioning service

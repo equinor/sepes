@@ -14,8 +14,7 @@ namespace Sepes.Infrastructure.Service
 {
     public class DatasetService : DatasetServiceBase, IDatasetService
     {
-        IPreApprovedDatasetModelService _preApprovedDatasetModelService;
-
+        readonly IPreApprovedDatasetModelService _preApprovedDatasetModelService;
         public DatasetService(SepesDbContext db, IMapper mapper, ILogger<DatasetService> logger, IUserService userService, IStudyPermissionService studyPermissionService, IPreApprovedDatasetModelService preApprovedDatasetModelService)
             : base(db, mapper, logger, userService, studyPermissionService)
         {
@@ -117,7 +116,7 @@ namespace Sepes.Infrastructure.Service
                 datasetFromDb.Description = updatedDataset.Description;
             }
             datasetFromDb.Updated = DateTime.UtcNow;
-            Validate(datasetFromDb);
+            EntityValidationUtil.Validate<Dataset>(datasetFromDb);         
             await _db.SaveChangesAsync();
             return await GetByIdAsync(datasetFromDb.Id);
         }       

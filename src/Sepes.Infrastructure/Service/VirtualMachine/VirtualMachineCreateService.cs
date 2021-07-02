@@ -14,7 +14,6 @@ using Sepes.Infrastructure.Query;
 using Sepes.Infrastructure.Service.DataModelService.Interface;
 using Sepes.Infrastructure.Service.Interface;
 using Sepes.Infrastructure.Util;
-using Sepes.Infrastructure.Util.Azure;
 using System;
 using System.Collections.Generic;
 using System.Linq;

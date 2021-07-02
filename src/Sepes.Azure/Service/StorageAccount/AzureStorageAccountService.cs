@@ -1,17 +1,16 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Sepes.Common.Dto.Provisioning;
-using Sepes.Azure.Service.Interface;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Sepes.Azure.Dto;
+using Sepes.Azure.Service.Interface;
 using Sepes.Azure.Util;
-using Sepes.Azure.Util.Provisioning;
+using Sepes.Common.Dto.Provisioning;
 using Sepes.Common.Exceptions;
 
 namespace Sepes.Azure.Service

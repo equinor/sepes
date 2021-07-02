@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Sepes.Common.Dto.VirtualMachine;
+﻿using Sepes.Common.Dto.VirtualMachine;
 using Sepes.Infrastructure.Service.DataModelService.Interface;
 using Sepes.Infrastructure.Service.Interface;
 using System.Collections.Generic;
@@ -10,8 +9,8 @@ namespace Sepes.Infrastructure.Service.DataModelService
 {
     public class VirtualMachineDiskSizeService : DapperModelWithPermissionServiceBase, IVirtualMachineDiskSizeService
     {
-        public VirtualMachineDiskSizeService(ILogger<VirtualMachineDiskSizeService> logger, IDatabaseConnectionStringProvider databaseConnectionStringProvider, IUserService userService, IStudyPermissionService studyPermissionService)
-            : base(logger, databaseConnectionStringProvider, userService, studyPermissionService)
+        public VirtualMachineDiskSizeService(IDapperQueryService dapperQueryService, IUserService userService, IStudyPermissionService studyPermissionService)
+            : base(dapperQueryService, userService, studyPermissionService)
         {
 
         }
@@ -24,7 +23,7 @@ namespace Sepes.Infrastructure.Service.DataModelService
             disksQuery += " WHERE rd.[RegionKey] = (SELECT [Region] from sandboxRegionCte)";
             disksQuery += " ) SELECT [Key], [DisplayValue] FROM diskSizesCte ORDER BY [Size]";
 
-            var disks = await RunDapperQueryMultiple<VmDiskLookupDto>(disksQuery, new { SandboxId = sandboxId });
+            var disks = await _dapperQueryService.RunDapperQueryMultiple<VmDiskLookupDto>(disksQuery, new { SandboxId = sandboxId });
             return disks;
         }
     }

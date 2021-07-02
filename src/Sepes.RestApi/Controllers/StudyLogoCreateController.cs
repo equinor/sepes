@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Sepes.Infrastructure.Service.Interface;
+using Sepes.Infrastructure.Handlers.Interface;
 using System.Threading.Tasks;
 
 namespace Sepes.RestApi.Controller
@@ -14,11 +14,11 @@ namespace Sepes.RestApi.Controller
     [Authorize]
     public class StudyLogoCreateController : ControllerBase
     {      
-        readonly IStudyLogoCreateService _studyLogoCreateService;
+        readonly IStudyCreateLogoHandler _studyCreateLogoHandler;
 
-        public StudyLogoCreateController(IStudyLogoCreateService studyLogoCreateService)
+        public StudyLogoCreateController(IStudyCreateLogoHandler studyCreateLogoHandler)
         {
-            _studyLogoCreateService = studyLogoCreateService;
+            _studyCreateLogoHandler = studyCreateLogoHandler;
         }       
 
         // For local development, this method requires a running instance of Azure Storage Emulator
@@ -26,7 +26,7 @@ namespace Sepes.RestApi.Controller
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create(int studyId, [FromForm(Name = "image")] IFormFile studyLogo)
         {
-            var logoUrl = await _studyLogoCreateService.CreateAsync(studyId, studyLogo);
+            var logoUrl = await _studyCreateLogoHandler.CreateAsync(studyId, studyLogo);
             return new JsonResult(logoUrl);
         }
     }

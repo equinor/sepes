@@ -15,8 +15,8 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
     {
         public static async Task<Sandbox> Create(
                 Study study,
-                string sandboxName = SandboxConstants.NAME,
-                string region = TestConstants.REGION,
+                string sandboxName = SandboxTestConstants.NAME,
+                string region = CommonTestConstants.REGION,
                 SandboxPhase phase = SandboxPhase.Open,
              bool addDatasets = false)
         {
@@ -29,8 +29,8 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
 
         public static async Task<Sandbox> CreateFailing(
               Study study,
-              string sandboxName = SandboxConstants.NAME,
-              string region = TestConstants.REGION,
+              string sandboxName = SandboxTestConstants.NAME,
+              string region = CommonTestConstants.REGION,
               SandboxPhase phase = SandboxPhase.Open,
               int resourcesSucceeded = 0,
               string statusOfFailedResource = CloudResourceOperationState.FAILED,

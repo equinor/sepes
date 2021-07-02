@@ -47,11 +47,11 @@ namespace Sepes.RestApi.IntegrationTests.TestHelpers.Requests
             return new ParticipantLookupDto()
             {
                 Source = ParticipantSource.Db,
-                DatabaseId = TestUserConstants.COMMON_NEW_PARTICIPANT_DB_ID,
-                EmailAddress = TestUserConstants.COMMON_NEW_PARTICIPANT_EMAIL,
-                FullName = TestUserConstants.COMMON_NEW_PARTICIPANT_FULL_NAME,
-                ObjectId = TestUserConstants.COMMON_NEW_PARTICIPANT_OBJECTID,
-                UserName = TestUserConstants.COMMON_NEW_PARTICIPANT_UPN
+                DatabaseId = UserTestConstants.COMMON_NEW_PARTICIPANT_DB_ID,
+                EmailAddress = UserTestConstants.COMMON_NEW_PARTICIPANT_EMAIL,
+                FullName = UserTestConstants.COMMON_NEW_PARTICIPANT_FULL_NAME,
+                ObjectId = UserTestConstants.COMMON_NEW_PARTICIPANT_OBJECTID,
+                UserName = UserTestConstants.COMMON_NEW_PARTICIPANT_UPN
             };
         }
     } 

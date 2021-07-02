@@ -14,7 +14,6 @@ using Sepes.Common.Interface;
 using Sepes.Common.Response.Sandbox;
 using Sepes.Infrastructure.Model;
 using Sepes.Infrastructure.Util;
-using Sepes.Infrastructure.Util.Azure;
 using System.Linq;
 
 namespace Sepes.Infrastructure.Automapper
@@ -91,7 +90,7 @@ namespace Sepes.Infrastructure.Automapper
 
             CreateMap<CloudResource, DatasetResourceLightDto>()
                  .ForMember(dest => dest.Name, source => source.MapFrom(x => x.ResourceName))
-                  .ForMember(dest => dest.Type, source => source.MapFrom(x => AzureResourceTypeUtil.GetUserFriendlyName(x)))
+                  .ForMember(dest => dest.Type, source => source.MapFrom(x => AzureResourceTypeUtil.GetUserFriendlyName(x.ResourceType)))
                    .ForMember(dest => dest.Status, source => source.MapFrom(x => ResourceStatusUtil.ResourceStatus(x)))
                      .ForMember(dest => dest.LinkToExternalSystem, source => source.MapFrom<StorageAccountResourceExternalLinkResolver>())
                      .ForMember(dest => dest.RetryLink, source => source.MapFrom<DatasetResourceRetryLinkResolver>());
@@ -120,7 +119,7 @@ namespace Sepes.Infrastructure.Automapper
 
             CreateMap<CloudResource, SandboxResourceLight>()
             .ForMember(dest => dest.Name, source => source.MapFrom(x => x.ResourceName))           
-             .ForMember(dest => dest.Type, source => source.MapFrom(x => AzureResourceTypeUtil.GetUserFriendlyName(x)))
+             .ForMember(dest => dest.Type, source => source.MapFrom(x => AzureResourceTypeUtil.GetUserFriendlyName(x.ResourceType)))
               .ForMember(dest => dest.Status, source => source.MapFrom(x => ResourceStatusUtil.ResourceStatus(x)))
                 .ForMember(dest => dest.LinkToExternalSystem, source => source.MapFrom<SandboxResourceExternalLinkResolver>())
                 .ForMember(dest => dest.RetryLink, source => source.MapFrom<SandboxResourceRetryLinkResolver>())

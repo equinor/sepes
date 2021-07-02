@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Logging;
 using Sepes.Common.Constants;
 using Sepes.Common.Dto.Study;
 using Sepes.Infrastructure.Model;
@@ -14,10 +13,12 @@ namespace Sepes.Infrastructure.Service.DataModelService
 {
     public class StudyDetailsModelService : DapperModelWithPermissionServiceBase, IStudyDetailsModelService
     {
-        public StudyDetailsModelService(ILogger<StudyDetailsModelService> logger, IDatabaseConnectionStringProvider databaseConnectionStringProvider, IUserService userService, IStudyPermissionService studyPermissionService)
-            : base(logger, databaseConnectionStringProvider, userService, studyPermissionService)
-        {
+        readonly string _dbConnectionString;
 
+        public StudyDetailsModelService(IUserService userService, IDapperQueryService dapperQueryService, IDatabaseConnectionStringProvider databaseConnectionStringProvider, IStudyPermissionService studyPermissionService)
+            : base(dapperQueryService, userService, studyPermissionService)
+        {
+            _dbConnectionString = databaseConnectionStringProvider.GetConnectionString();
         }
 
         public async Task<StudyDetailsDapper> GetStudyDetailsAsync(int studyId)

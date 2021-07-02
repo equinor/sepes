@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sepes.Common.Constants;
 using Sepes.Infrastructure.Model;
@@ -13,19 +12,28 @@ using System.Threading.Tasks;
 
 namespace Sepes.Infrastructure.Service
 {
-    public class StudyDeleteService : StudyServiceBase, IStudyDeleteService
-    {
+    public class StudyDeleteService : IStudyDeleteService
+    {      
+        readonly SepesDbContext _db;
+        readonly IUserService _userService;
+        readonly IStudyEfModelService _studyModelService;
+
         readonly IStudyLogoDeleteService _studyLogoDeleteService;
         readonly IStudySpecificDatasetService _studySpecificDatasetService;
         readonly ICloudResourceReadService _cloudResourceReadService;
 
-        public StudyDeleteService(SepesDbContext db, IMapper mapper, ILogger<StudyDeleteService> logger, IUserService userService, IStudyEfModelService studyModelService,
-            IStudyLogoReadService studyLogoReadService,
+        public StudyDeleteService(ILogger<StudyDeleteService> logger,
+            SepesDbContext db,
+            IUserService userService,
+            IStudyEfModelService studyModelService,           
             IStudyLogoDeleteService studyLogoDeleteService,
             IStudySpecificDatasetService studySpecificDatasetService,
-            ICloudResourceReadService cloudResourceReadService)
-            : base(db, mapper, logger, userService, studyModelService, studyLogoReadService)
-        {
+            ICloudResourceReadService cloudResourceReadService) 
+        {           
+            _db = db;
+            _userService = userService;
+            _studyModelService = studyModelService;
+
             _studyLogoDeleteService = studyLogoDeleteService;
             _studySpecificDatasetService = studySpecificDatasetService;
             _cloudResourceReadService = cloudResourceReadService;
@@ -54,7 +62,7 @@ namespace Sepes.Infrastructure.Service
 
             ValidateStudyForCloseOrDeleteThrowIfNot(studyFromDb);
 
-            await _studyLogoDeleteService.DeleteAsync(studyFromDb);
+            await _studyLogoDeleteService.DeleteAsync(studyFromDb.LogoUrl);
 
             await _studySpecificDatasetService.HardDeleteAllStudySpecificDatasetsAsync(studyFromDb);
             await _studySpecificDatasetService.DeleteAllStudyRelatedResourcesAsync(studyFromDb);

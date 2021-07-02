@@ -13,11 +13,11 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
     public static class StudySeed
     {
         public static async Task<Study> CreatedByCurrentUser(
-            string name = StudyConstants.CREATED_BY_ME_NAME,
-            string vendor = StudyConstants.CREATED_BY_ME_VENDOR,
-            string wbs = StudyConstants.CREATED_BY_ME_WBS,
+            string name = StudyTestConstants.CREATED_BY_ME_NAME,
+            string vendor = StudyTestConstants.CREATED_BY_ME_VENDOR,
+            string wbs = StudyTestConstants.CREATED_BY_ME_WBS,
             bool restricted = false,
-            int userId = TestUserConstants.COMMON_CUR_USER_DB_ID,
+            int userId = UserTestConstants.COMMON_CUR_USER_DB_ID,
             List<string> additionalRolesForCurrentUser = null,
             List<string> rolesForOtherUser = null,
             bool addDatasets = false
@@ -41,7 +41,7 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
                 foreach (var curRoleOtherUser in rolesForOtherUser)
                 {
                     if (!String.IsNullOrWhiteSpace(curRoleOtherUser))
-                        AddParticipant(study, TestUserConstants.COMMON_NEW_PARTICIPANT_DB_ID, curRoleOtherUser);
+                        AddParticipant(study, UserTestConstants.COMMON_NEW_PARTICIPANT_DB_ID, curRoleOtherUser);
                 }
             }
 
@@ -52,12 +52,12 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
         }
 
         public static async Task<Study> CreatedByOtherUser(
-            string name = StudyConstants.CREATED_BY_OTHER_NAME,
-            string vendor = StudyConstants.CREATED_BY_OTHER_VENDOR,
-            string wbs = StudyConstants.CREATED_BY_OTHER_WBS,
+            string name = StudyTestConstants.CREATED_BY_OTHER_NAME,
+            string vendor = StudyTestConstants.CREATED_BY_OTHER_VENDOR,
+            string wbs = StudyTestConstants.CREATED_BY_OTHER_WBS,
             bool restricted = false,
-            int ownerUserId = TestUserConstants.COMMON_ALTERNATIVE_STUDY_OWNER_DB_ID,
-            int userId = TestUserConstants.COMMON_CUR_USER_DB_ID,
+            int ownerUserId = UserTestConstants.COMMON_ALTERNATIVE_STUDY_OWNER_DB_ID,
+            int userId = UserTestConstants.COMMON_CUR_USER_DB_ID,
             List<string> additionalRolesForCurrentUser = null,
             List<string> rolesForOtherUser = null,
             bool addDatasets = false)
@@ -80,7 +80,7 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
                 foreach (var curRoleOtherUser in rolesForOtherUser)
                 {
                     if (!String.IsNullOrWhiteSpace(curRoleOtherUser))
-                        AddParticipant(study, TestUserConstants.COMMON_NEW_PARTICIPANT_DB_ID, curRoleOtherUser);
+                        AddParticipant(study, UserTestConstants.COMMON_NEW_PARTICIPANT_DB_ID, curRoleOtherUser);
                 }
             }
 
@@ -101,7 +101,7 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
                     var datasetName = $"ds-{counter}";
                     var datasetClassification = (DatasetClassification)counter;
 
-                    var datasetRelation = DatasetFactory.CreateStudySpecificRelation(study, datasetName, TestConstants.REGION, datasetClassification.ToString());
+                    var datasetRelation = DatasetFactory.CreateStudySpecificRelation(study, datasetName, CommonTestConstants.REGION, datasetClassification.ToString());
                     study.StudyDatasets.Add(datasetRelation);
                 }
             }
@@ -129,7 +129,7 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
         static CloudResource StudySpecificDatasetResourceGroup(string studyName)
         {
             var resourceGroupName = AzureResourceNameUtil.StudySpecificDatasetResourceGroup(studyName);
-            return CloudResourceFactory.CreateResourceGroup(TestConstants.REGION, resourceGroupName, purpose: CloudResourcePurpose.StudySpecificDatasetContainer);
+            return CloudResourceFactory.CreateResourceGroup(CommonTestConstants.REGION, resourceGroupName, purpose: CloudResourcePurpose.StudySpecificDatasetContainer);
         }
 
         public static void AddParticipant(Study study, int userId, string role)

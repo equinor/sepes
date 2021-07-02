@@ -9,8 +9,7 @@ namespace Sepes.Infrastructure.Service
 {
     public class StudyLogoDeleteService : IStudyLogoDeleteService
     {
-        readonly string _containerName = "studylogos";    
-   
+        readonly string _containerName = "studylogos";
         readonly IAzureBlobStorageService _azureBlobStorageService;
         readonly IAzureBlobStorageUriBuilderService _azureStorageAccountTokenService;
 
@@ -25,11 +24,11 @@ namespace Sepes.Infrastructure.Service
             _azureStorageAccountTokenService.SetConnectionParameters(ConfigConstants.STUDY_LOGO_STORAGE_CONSTRING);
         }       
 
-        public async Task DeleteAsync(Study study)
+        public async Task DeleteAsync(string logoUrl)
         {
-            if (!String.IsNullOrWhiteSpace(study.LogoUrl))
+            if (!String.IsNullOrWhiteSpace(logoUrl))
             {
-                _ = await _azureBlobStorageService.DeleteFileFromBlobContainer(_containerName, study.LogoUrl);
+                _ = await _azureBlobStorageService.DeleteFileFromBlobContainer(_containerName, logoUrl);
             }
         } 
     }

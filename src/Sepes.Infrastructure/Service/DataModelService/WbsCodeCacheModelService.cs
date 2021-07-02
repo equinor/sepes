@@ -7,14 +7,17 @@ using System.Threading.Tasks;
 
 namespace Sepes.Infrastructure.Service.DataModelService
 {
-    public class WbsCodeCacheModelService : DapperModelServiceBase, IWbsCodeCacheModelService
+    public class WbsCodeCacheModelService : IWbsCodeCacheModelService
     {
         const string WBS_TABLE_NAME = "dbo.[WbsCodeCache]";
 
-        public WbsCodeCacheModelService(ILogger<WbsCodeCacheModelService> logger, IDatabaseConnectionStringProvider databaseConnectionStringProvider)
-            : base(logger, databaseConnectionStringProvider)
-        {
+        readonly ILogger _logger;
+        readonly IDapperQueryService _dapperQueryService;
 
+        public WbsCodeCacheModelService(ILogger<WbsCodeCacheModelService> logger, IDapperQueryService dapperQueryService)
+        {
+            _logger = logger;
+            _dapperQueryService = dapperQueryService;
         }
 
         public async Task<WbsCodeCache> Get(string wbsCode)
@@ -42,7 +45,7 @@ namespace Sepes.Infrastructure.Service.DataModelService
         {
             try
             {
-                return await base.RunDapperQuerySingleAsync<T>(query, new { wbsCode });
+                return await _dapperQueryService.RunDapperQuerySingleAsync<T>(query, new { wbsCode });
             }
             catch (Exception ex)
             {
@@ -66,14 +69,14 @@ namespace Sepes.Infrastructure.Service.DataModelService
 
                     var updateEntrySql = $"UPDATE {WBS_TABLE_NAME} SET [Valid] = {validString}, [Expires] = {GetNewExpiresSql(valid)} {WhereEqualsWbsCodePart()}";
 
-                    await base.ExecuteAsync(updateEntrySql, new { wbsCode });
+                    await _dapperQueryService.ExecuteAsync(updateEntrySql, new { wbsCode });
                 }
                 else
                 {
                     _logger.LogInformation($"Wbs Cache - Add: {wbsCode}, valid: {valid}, item does not exist, adding!");
                     var insertWbsCodeSql = $"IF NOT EXISTS({AnyQuery()}) BEGIN INSERT INTO {WBS_TABLE_NAME} ([WbsCode],[Valid],[Expires]) VALUES (@wbsCode,{validString},{GetNewExpiresSql(valid)}) END";
 
-                    await base.ExecuteAsync(insertWbsCodeSql, new { wbsCode });
+                    await _dapperQueryService.ExecuteAsync(insertWbsCodeSql, new { wbsCode });
                 }
             }
             catch (Exception ex)
@@ -92,7 +95,7 @@ namespace Sepes.Infrastructure.Service.DataModelService
         public async Task Clean()
         {
             var cleanWbsQuery = $"DELETE FROM {WBS_TABLE_NAME} WHERE {ExpiresPart()}";
-            await base.ExecuteAsync(cleanWbsQuery);
+            await _dapperQueryService.ExecuteAsync(cleanWbsQuery);
         }
 
         string AnyQuery()

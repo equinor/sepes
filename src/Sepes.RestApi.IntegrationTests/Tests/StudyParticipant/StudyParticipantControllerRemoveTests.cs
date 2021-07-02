@@ -99,13 +99,13 @@ namespace Sepes.RestApi.IntegrationTests.Tests
 
         async Task PerformTestsExpectSuccess(int studyId, string roleToRemove)
         {          
-            var studyParticipantRemoveConversation = await StudyParticipantAdderAndRemover.RemoveAndExpectSuccess(_restHelper, studyId, TestUserConstants.COMMON_NEW_PARTICIPANT_DB_ID, roleToRemove);
+            var studyParticipantRemoveConversation = await StudyParticipantAdderAndRemover.RemoveAndExpectSuccess(_restHelper, studyId, UserTestConstants.COMMON_NEW_PARTICIPANT_DB_ID, roleToRemove);
             ApiResponseBasicAsserts.ExpectNoContent(studyParticipantRemoveConversation.Response);          
         }
 
         async Task PerformTestsExpectFailure(int studyId, string roleToRemove)
         {
-            var studyParticipantRemoveConversation = await StudyParticipantAdderAndRemover.RemoveAndExpectFailure(_restHelper, studyId, TestUserConstants.COMMON_NEW_PARTICIPANT_DB_ID, roleToRemove);
+            var studyParticipantRemoveConversation = await StudyParticipantAdderAndRemover.RemoveAndExpectFailure(_restHelper, studyId, UserTestConstants.COMMON_NEW_PARTICIPANT_DB_ID, roleToRemove);
             ApiResponseBasicAsserts.ExpectForbiddenWithMessage(studyParticipantRemoveConversation.Response);
         }
     }

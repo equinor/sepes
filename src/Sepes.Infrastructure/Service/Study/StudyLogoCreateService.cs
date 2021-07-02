@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Sepes.Azure.Service.Interface;
 using Sepes.Common.Constants;
+using Sepes.Infrastructure.Model;
 using Sepes.Infrastructure.Model.Context;
 using Sepes.Infrastructure.Service.DataModelService.Interface;
 using Sepes.Infrastructure.Service.Interface;
@@ -12,20 +13,14 @@ namespace Sepes.Infrastructure.Service
 {
     public class StudyLogoCreateService : IStudyLogoCreateService
     {
-        readonly string _containerName = "studylogos";
+        readonly string _containerName = "studylogos";       
        
-        readonly SepesDbContext _db;
-        readonly IStudyEfModelService _studyModelService;
         readonly IAzureBlobStorageService _azureBlobStorageService;
         readonly IAzureBlobStorageUriBuilderService _azureStorageAccountTokenService;
 
-        public StudyLogoCreateService(SepesDbContext db,
-            IStudyEfModelService studyModelService,
-            IAzureBlobStorageService blobService,
+        public StudyLogoCreateService(IAzureBlobStorageService blobService,
             IAzureBlobStorageUriBuilderService azureStorageAccountTokenService)
-        {           
-            _db = db;        
-            _studyModelService = studyModelService;
+        { 
             _azureBlobStorageService = blobService;
             _azureStorageAccountTokenService = azureStorageAccountTokenService;
 
@@ -33,10 +28,8 @@ namespace Sepes.Infrastructure.Service
             _azureStorageAccountTokenService.SetConnectionParameters(ConfigConstants.STUDY_LOGO_STORAGE_CONSTRING);
         }       
 
-        public async Task<string> CreateAsync(int studyId, IFormFile studyLogo)
-        {
-            var studyFromDb = await _studyModelService.GetByIdAsync(studyId, UserOperation.Study_Update_Metadata);
-
+        public async Task<string> CreateAsync(Study studyFromDb, IFormFile studyLogo)
+        { 
             if (!FileIsCorrectImageFormat(studyLogo))
             {
                 throw new ArgumentException("Blob has invalid filename or is not of type png, jpg or bmp.");
@@ -48,9 +41,7 @@ namespace Sepes.Infrastructure.Service
 
             string oldFileName = studyFromDb.LogoUrl;
 
-            studyFromDb.LogoUrl = uniqueFileName;
-
-            await _db.SaveChangesAsync();
+            studyFromDb.LogoUrl = uniqueFileName;            
 
             if (!String.IsNullOrWhiteSpace(oldFileName))
             {

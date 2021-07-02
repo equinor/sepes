@@ -5,7 +5,6 @@ using Sepes.Common.Dto.VirtualMachine;
 using Sepes.Common.Util;
 using Sepes.Infrastructure.Model;
 using Sepes.Infrastructure.Util;
-using Sepes.Infrastructure.Util.Azure;
 using Sepes.RestApi.IntegrationTests.TestHelpers;
 using Sepes.Tests.Common.Constants;
 using System.Threading.Tasks;
@@ -16,7 +15,7 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
     {
         public static async Task<CloudResource> CreateSimple(
           Sandbox sandbox,
-          string vmNameSuffix = VirtualMachineConstants.NAME)
+          string vmNameSuffix = VirtualMachineTestConstants.NAME)
         {
             var sandboxResourceGroup = CloudResourceUtil.GetSandboxResourceGroupEntry(sandbox.Resources);
             var vmResource = CreateVmResource(sandbox, sandboxResourceGroup, sandbox.Study.Name, vmNameSuffix);
@@ -25,10 +24,10 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
 
         public static async Task<CloudResource> Create(
             Sandbox sandbox,
-            string vmNameSuffix = VirtualMachineConstants.NAME,
-            string size = VirtualMachineConstants.SIZE,
-            string osCategory = VirtualMachineConstants.OS_CATEGORY_WINDOWS,
-            string os = VirtualMachineConstants.OS_WINDOWS,
+            string vmNameSuffix = VirtualMachineTestConstants.NAME,
+            string size = VirtualMachineTestConstants.SIZE,
+            string osCategory = VirtualMachineTestConstants.OS_CATEGORY_WINDOWS,
+            string os = VirtualMachineTestConstants.OS_WINDOWS,
             bool deleted = false,
             bool deleteSucceeded = false)
         {
@@ -43,10 +42,10 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
 
         public static async Task<CloudResource> CreateFailed(
           Sandbox sandbox,
-          string vmNameSuffix = VirtualMachineConstants.NAME,
-          string size = VirtualMachineConstants.SIZE,
-          string osCategory = VirtualMachineConstants.OS_CATEGORY_WINDOWS,
-          string os = VirtualMachineConstants.OS_WINDOWS,
+          string vmNameSuffix = VirtualMachineTestConstants.NAME,
+          string size = VirtualMachineTestConstants.SIZE,
+          string osCategory = VirtualMachineTestConstants.OS_CATEGORY_WINDOWS,
+          string os = VirtualMachineTestConstants.OS_WINDOWS,
           string statusOfFailedResource = CloudResourceOperationState.FAILED,
           int tryCount = CloudResourceConstants.RESOURCE_MAX_TRY_COUNT,
           int maxTryCount = CloudResourceConstants.RESOURCE_MAX_TRY_COUNT,
@@ -97,7 +96,7 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
             return vmResource;
         }
 
-        static string CreateVmSettingsString(string size = VirtualMachineConstants.SIZE, string osCategory = "windows", string os = "win2019datacenter")
+        static string CreateVmSettingsString(string size = VirtualMachineTestConstants.SIZE, string osCategory = "windows", string os = "win2019datacenter")
         {
             var vmSettings = new VmSettingsDto()
             {
@@ -108,7 +107,7 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
                 Rules = VmRuleUtils.CreateInitialVmRules(1),
                 OperatingSystemCategory = osCategory,
                 OperatingSystem = os,
-                Username = VirtualMachineConstants.USERNAME,
+                Username = VirtualMachineTestConstants.USERNAME,
                 Password = "nameinkeyvault",
             };
 

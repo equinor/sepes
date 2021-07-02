@@ -7,24 +7,27 @@ using System.Threading.Tasks;
 
 namespace Sepes.Infrastructure.Service.DataModelService
 {
-    public class UserModelDapperService : DapperModelServiceBase, IUserModelService
+    public class UserModelDapperService : IUserModelService
     {
-        public UserModelDapperService(ILogger<UserModelDapperService> logger, IDatabaseConnectionStringProvider databaseConnectionStringProvider)
-            : base(logger, databaseConnectionStringProvider)
-        {
+        readonly ILogger _logger;
+        readonly IDapperQueryService _dapperQueryService;
 
+        public UserModelDapperService(ILogger<UserModelDapperService> logger, IDapperQueryService dapperQueryService)          
+        {
+            _logger = logger;
+            _dapperQueryService = dapperQueryService;
         }
 
         public async Task<UserDto> GetByIdAsync(int userId)
         {
             var query = BasicQueryWithUserIdArg();
-            return await RunDapperQuerySingleAsync<UserDto>(query, new { userId });
+            return await _dapperQueryService.RunDapperQuerySingleAsync<UserDto>(query, new { userId });
         }
 
         public async Task<UserDto> GetByObjectIdAsync(string objectId)
         {
             var query = BasicQueryWithObjectIdArg();
-            var user = await RunDapperQuerySingleAsync<UserDto>(query, new { objectId });
+            var user = await _dapperQueryService.RunDapperQuerySingleAsync<UserDto>(query, new { objectId });
             return user;
         }
 
@@ -37,7 +40,7 @@ namespace Sepes.Infrastructure.Service.DataModelService
                 insertStatement += $" VALUES('{fullName}','{userName}','{emailAddress}','{objectId}', GETUTCDATE(), '{createdBy}', GETUTCDATE(), '{createdBy}')";
                 insertStatement += $" END";
 
-                await ExecuteAsync(insertStatement, new { objectId });
+                await _dapperQueryService.ExecuteAsync(insertStatement, new { objectId });
             }
             catch (Exception ex)
             {

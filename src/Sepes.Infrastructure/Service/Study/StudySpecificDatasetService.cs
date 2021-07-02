@@ -100,7 +100,7 @@ namespace Sepes.Infrastructure.Service
 
             DatasetUtils.UpdateDatasetBasicDetails(datasetFromDb, updatedDataset);
 
-            Validate(datasetFromDb);
+            EntityValidationUtil.Validate<Dataset>(datasetFromDb);       
 
             await _db.SaveChangesAsync();
 

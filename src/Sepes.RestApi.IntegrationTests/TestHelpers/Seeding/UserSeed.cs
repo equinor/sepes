@@ -11,10 +11,10 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
         {            
                 var testUser = new Infrastructure.Model.User()
                 {                  
-                    EmailAddress = TestUserConstants.COMMON_CUR_USER_EMAIL,
-                    ObjectId = TestUserConstants.COMMON_CUR_USER_OBJECTID,
-                    FullName = TestUserConstants.COMMON_CUR_USER_FULL_NAME,
-                    UserName = TestUserConstants.COMMON_CUR_USER_UPN,
+                    EmailAddress = UserTestConstants.COMMON_CUR_USER_EMAIL,
+                    ObjectId = UserTestConstants.COMMON_CUR_USER_OBJECTID,
+                    FullName = UserTestConstants.COMMON_CUR_USER_FULL_NAME,
+                    UserName = UserTestConstants.COMMON_CUR_USER_UPN,
                     CreatedBy = "seed",
                     UpdatedBy = "seed",
                     Created = DateTime.UtcNow,
@@ -25,10 +25,10 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
 
                 var someOtherParticipant = new Infrastructure.Model.User()
                 {                   
-                    EmailAddress = TestUserConstants.COMMON_NEW_PARTICIPANT_EMAIL,
-                    ObjectId = TestUserConstants.COMMON_NEW_PARTICIPANT_OBJECTID,
-                    FullName = TestUserConstants.COMMON_NEW_PARTICIPANT_FULL_NAME,
-                    UserName = TestUserConstants.COMMON_NEW_PARTICIPANT_UPN,
+                    EmailAddress = UserTestConstants.COMMON_NEW_PARTICIPANT_EMAIL,
+                    ObjectId = UserTestConstants.COMMON_NEW_PARTICIPANT_OBJECTID,
+                    FullName = UserTestConstants.COMMON_NEW_PARTICIPANT_FULL_NAME,
+                    UserName = UserTestConstants.COMMON_NEW_PARTICIPANT_UPN,
                     CreatedBy = "seed",
                     UpdatedBy = "seed",
                     Created = DateTime.UtcNow,
@@ -40,10 +40,10 @@ namespace Sepes.RestApi.IntegrationTests.Setup.Seeding
 
                 var someOtherStudyOwner = new Infrastructure.Model.User()
                 {                  
-                    EmailAddress = TestUserConstants.COMMON_ALTERNATIVE_STUDY_OWNER_EMAIL,
-                    ObjectId = TestUserConstants.COMMON_ALTERNATIVE_STUDY_OWNER_OBJECTID,
-                    FullName = TestUserConstants.COMMON_ALTERNATIVE_STUDY_OWNER_FULL_NAME,
-                    UserName = TestUserConstants.COMMON_ALTERNATIVE_STUDY_OWNER_UPN,
+                    EmailAddress = UserTestConstants.COMMON_ALTERNATIVE_STUDY_OWNER_EMAIL,
+                    ObjectId = UserTestConstants.COMMON_ALTERNATIVE_STUDY_OWNER_OBJECTID,
+                    FullName = UserTestConstants.COMMON_ALTERNATIVE_STUDY_OWNER_FULL_NAME,
+                    UserName = UserTestConstants.COMMON_ALTERNATIVE_STUDY_OWNER_UPN,
                     CreatedBy = "seed",
                     UpdatedBy = "seed",
                     Created = DateTime.UtcNow,

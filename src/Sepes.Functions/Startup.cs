@@ -83,6 +83,8 @@ namespace Sepes.Functions
             builder.Services.AddSingleton<IPublicIpFromThirdPartyService, PublicIpFromThirdPartyService>();
             builder.Services.AddSingleton<IPublicIpService, PublicIpService>();
             builder.Services.AddTransient<IHealthService, HealthService>();
+            builder.Services.AddTransient<IDapperQueryService, DapperQueryService>();
+            builder.Services.AddTransient<IStudyEfModelOperationsService, StudyEfModelOperationsService>();
 
             //Domain Model Services
             builder.Services.AddTransient<IDatabaseConnectionStringProvider, DatabaseConnectionStringProvider>();
